@@ -3,10 +3,17 @@ const { combineResults, countNumberOfPosts, getNotUniquePosts, findClosestUser }
 async function initScript() {
   const [posts, users] = await Promise.all([getPosts(), getUsers()]);
 
-  combineResults(posts, users); 
-  countNumberOfPosts(posts, users);
-  getNotUniquePosts(posts);
-  findClosestUser(users); 
+  const combinedResults = combineResults(posts, users);
+  console.log('1) Połącz dane o postach z danymi o użytkownikach: ', combinedResults);
+
+  const userPostCount = countNumberOfPosts(posts, users);
+  console.log('2) Policzy ile postów napisali użytkownicy: ', userPostCount);
+
+  const notUniquePosts = getNotUniquePosts(posts);
+  console.log('3) Zwróci listę tytułów postów które nie są unikalne: ', notUniquePosts.length === 0 ? 'Wszystkie posty są unikalne' : notUniquePosts);
+
+  const closestUserList = findClosestUser(users);
+  console.log('4) Dla każdego użytkownika znajdzie innego użytkownika, który mieszka najbliżej niego: ', closestUserList)
 };
 
 async function getPosts() {

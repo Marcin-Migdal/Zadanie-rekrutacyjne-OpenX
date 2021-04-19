@@ -2,11 +2,7 @@ exports.combineResults = (posts, users) => {
   let results = [];
   const postsByUserId = sortPostsByUserId(posts);
 
-  users.map(user => {
-    results.push({ ...user, posts: postsByUserId[user.id] })
-  });
-
-  console.log('1) Połącz dane o postach z danymi o użytkownikach: ', results)
+  users.map(user => results.push({ ...user, posts: postsByUserId[user.id] }));
 
   return results;
 }
@@ -17,9 +13,7 @@ exports.countNumberOfPosts = (posts, users) => {
 
   users.map(user => {
     userPostCount[user.id] = user.username + ' napisał(a) ' + postsByUserId[user.id].length + ' postów';
-  })
-
-  console.log('2) Policzy ile postów napisali użytkownicy: ', userPostCount)
+  });
 
   return userPostCount;
 }
@@ -37,8 +31,6 @@ exports.getNotUniquePosts = (posts) => {
       valuesSoFar[post.title] = 1;
     }
   });
-
-  console.log('3) Zwróci listę tytułów postów które nie są unikalne: ', notUniquePosts)
 
   return notUniquePosts;
 }
@@ -61,12 +53,10 @@ exports.findClosestUser = (users) => {
         shortestDistance = tempDistance;
         tempClosestUser = u2;
       }
-    })
+    });
 
     closestUserList.push({ ...u1, closestUser: tempClosestUser });
-  })
-
-  console.log('4) Dla każdego użytkownika znajdzie innego użytkownika, który mieszka najbliżej niego: ', closestUserList) 
+  });
 
   return closestUserList;
 }
@@ -80,7 +70,7 @@ function sortPostsByUserId(posts) {
     } else {
       postsByUserId[post.userId] = [post];
     }
-  })
+  });
 
   return postsByUserId;
 }

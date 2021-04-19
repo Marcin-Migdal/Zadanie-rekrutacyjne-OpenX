@@ -49,5 +49,4 @@ test('should find closest user for each user ', async () => {
 
   const expectedId = [3, 3, 2, 1];
   closestUser.map((res, index) => expect(res.closestUser.id).toBe(expectedId[index]));
-
 })
