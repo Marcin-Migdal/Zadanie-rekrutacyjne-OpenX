@@ -32,7 +32,7 @@ test('should count amount of posts that user made', async () => {
   const numberOfPosts = countNumberOfPosts(posts, users);
 
   const amountOfPosts = amountOfPostsByUserId(posts);
-  users.map(user => expect(numberOfPosts[user.id]).toBe(user.username + ' napisał(a) ' + amountOfPosts[user.id] + ' postów'));
+  users.map((user, index) => expect(numberOfPosts[index]).toBe(user.username + ' napisał(a) ' + amountOfPosts[user.id] + ' postów'));
 })
 
 test('should find not unique post by title', async () => {

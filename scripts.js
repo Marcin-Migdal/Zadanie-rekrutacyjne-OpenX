@@ -12,7 +12,7 @@ exports.countNumberOfPosts = (posts, users) => {
   const postsByUserId = sortPostsByUserId(posts);
 
   users.map(user => {
-    userPostCount[user.id] = user.username + ' napisał(a) ' + postsByUserId[user.id].length + ' postów';
+    userPostCount.push(user.username + ' napisał(a) ' + postsByUserId[user.id].length + ' postów');
   });
 
   return userPostCount;
