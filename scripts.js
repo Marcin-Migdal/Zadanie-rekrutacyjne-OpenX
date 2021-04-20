@@ -2,7 +2,7 @@ exports.combineResults = (posts, users) => {
   let results = [];
   const postsByUserId = sortPostsByUserId(posts);
 
-  users.map(user => results.push({ ...user, posts: postsByUserId[user.id] }));
+  users.forEach(user => results.push({ ...user, posts: postsByUserId[user.id] }));
 
   return results;
 }
@@ -11,7 +11,7 @@ exports.countNumberOfPosts = (posts, users) => {
   let userPostCount = [];
   const postsByUserId = sortPostsByUserId(posts);
 
-  users.map(user => {
+  users.forEach(user => {
     userPostCount.push(user.username + ' napisał(a) ' + postsByUserId[user.id].length + ' postów');
   });
 
@@ -22,7 +22,7 @@ exports.getNotUniquePosts = (posts) => {
   let notUniquePosts = [];
   let valuesSoFar = Object.create(null);
 
-  posts.map(post => {
+  posts.forEach(post => {
     if (valuesSoFar[post.title] === 1) {
       valuesSoFar[post.title] += 1;
       notUniquePosts.push({ postId: post.id, title: post.title });
@@ -38,12 +38,12 @@ exports.getNotUniquePosts = (posts) => {
 exports.findClosestUser = (users) => {
   let closestUserList = [];
 
-  users.map(u1 => {
+  users.forEach(u1 => {
     let tempUsers = users.filter(u2 => { return u2.id !== u1.id });
     let tempClosestUser;
     let shortestDistance;
 
-    tempUsers.map(u2 => {
+    tempUsers.forEach(u2 => {
       let tempDistance = getDistance(u1.address.geo, u2.address.geo);
 
       if (tempDistance < shortestDistance) {
@@ -64,7 +64,7 @@ exports.findClosestUser = (users) => {
 function sortPostsByUserId(posts) {
   let postsByUserId = [];
 
-  posts.map(post => {
+  posts.forEach(post => {
     if (postsByUserId[post.userId]) {
       postsByUserId[post.userId] = [...postsByUserId[post.userId], post];
     } else {

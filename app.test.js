@@ -4,7 +4,7 @@ const { combineResults, countNumberOfPosts, getNotUniquePosts, findClosestUser }
 function amountOfPostsByUserId(posts) {
   let amountOfPostsByUserId = [];
 
-  posts.map(post => {
+  posts.forEach(post => {
     if (amountOfPostsByUserId[post.userId]) {
       amountOfPostsByUserId[post.userId] += 1;
     } else {
@@ -22,7 +22,7 @@ test('should combine users and posts', async () => {
   const combinedResults = combineResults(posts, users);
 
   const amountOfPosts = amountOfPostsByUserId(posts);
-  combinedResults.map(user => expect(user.posts.length).toBe(amountOfPosts[user.id]));
+  combinedResults.forEach(user => expect(user.posts.length).toBe(amountOfPosts[user.id]));
 })
 
 test('should count amount of posts that user made', async () => {
@@ -32,7 +32,7 @@ test('should count amount of posts that user made', async () => {
   const numberOfPosts = countNumberOfPosts(posts, users);
 
   const amountOfPosts = amountOfPostsByUserId(posts);
-  users.map((user, index) => expect(numberOfPosts[index]).toBe(user.username + ' napisał(a) ' + amountOfPosts[user.id] + ' postów'));
+  users.forEach((user, index) => expect(numberOfPosts[index]).toBe(user.username + ' napisał(a) ' + amountOfPosts[user.id] + ' postów'));
 })
 
 test('should find not unique post by title', async () => {
@@ -48,5 +48,5 @@ test('should find closest user for each user ', async () => {
   const closestUser = findClosestUser(users);
 
   const expectedId = [3, 3, 2, 1];
-  closestUser.map((res, index) => expect(res.closestUser.id).toBe(expectedId[index]));
+  closestUser.forEach((res, index) => expect(res.closestUser.id).toBe(expectedId[index]));
 })
