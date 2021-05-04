@@ -54,7 +54,7 @@ const mockPostsResponse = [
     "body": "consectetur animi nesciunt iure dolore\nenim quia ad\nveniam autem ut quam aut nobis\net est aut quod aut provident voluptas autem voluptas"
   },
   {
-    "userId": 4,
+    "userId": 5,
     "id": 10,
     "title": "optio molestias id quia eum",
     "body": "quo et expedita modi cum officia vel magni\ndoloribus qui repudiandae\nvero nisi sit\nquos veniam quod sed accusamus veritatis error"
@@ -99,6 +99,16 @@ const mockUsersResponse = [
       "geo": {
         "lat": "29.4572",
         "lng": "-164.2990"
+      }
+    },
+  },
+  {
+    "id": 5,
+    "username": "Andy",
+    "address": {
+      "geo": {
+        "lat": "-38.2386",
+        "lng": "57.2232"
       }
     },
   }

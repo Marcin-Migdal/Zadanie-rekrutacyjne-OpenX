@@ -1,9 +1,21 @@
 exports.combineResults = (posts, users) => {
   let results = [];
-  const postsByUserId = sortPostsByUserId(posts);
+  const usersPosts = sortPostsByUserId(posts);
 
-  users.map(user => {
-    results.push({ ...user, posts: postsByUserId[user.id] })
+  users.forEach(user => {
+    const userPosts = getUserPosts(usersPosts, user.id);
+
+    if (userPosts) {
+      results.push({
+        ...user,
+        posts: userPosts.posts
+      })
+    } else {
+      results.push({
+        ...user,
+        posts: []
+      })
+    }
   });
 
   console.log('1) Połącz dane o postach z danymi o użytkownikach: ', results)
@@ -13,10 +25,16 @@ exports.combineResults = (posts, users) => {
 
 exports.countNumberOfPosts = (posts, users) => {
   let userPostCount = [];
-  const postsByUserId = sortPostsByUserId(posts);
+  const usersPosts = sortPostsByUserId(posts);
 
-  users.map(user => {
-    userPostCount[user.id] = user.username + ' napisał(a) ' + postsByUserId[user.id].length + ' postów';
+  users.forEach(user => {
+    const userPosts = getUserPosts(usersPosts, user.id);
+
+    if (userPosts) {
+      userPostCount.push(user.username + ' napisał(a) ' + userPosts.posts.length + ' postów');
+    } else {
+      userPostCount.push(user.username + ' napisał(a) 0 postów');
+    }
   })
 
   console.log('2) Policzy ile postów napisali użytkownicy: ', userPostCount)
@@ -28,7 +46,7 @@ exports.getNotUniquePosts = (posts) => {
   let notUniquePosts = [];
   let valuesSoFar = Object.create(null);
 
-  posts.map(post => {
+  posts.forEach(post => {
     if (valuesSoFar[post.title] === 1) {
       valuesSoFar[post.title] += 1;
       notUniquePosts.push({ postId: post.id, title: post.title });
@@ -46,13 +64,13 @@ exports.getNotUniquePosts = (posts) => {
 exports.findClosestUser = (users) => {
   let closestUserList = [];
 
-  users.map(u1 => {
-    let tempUsers = users.filter(u2 => { return u2.id !== u1.id });
+  users.forEach(u1 => {
+    const tempUsers = users.filter(u2 => { return u2.id !== u1.id });
     let tempClosestUser;
     let shortestDistance;
 
-    tempUsers.map(u2 => {
-      let tempDistance = getDistance(u1.address.geo, u2.address.geo);
+    tempUsers.forEach(u2 => {
+      const tempDistance = getDistance(u1.address.geo, u2.address.geo);
 
       if (tempDistance < shortestDistance) {
         shortestDistance = tempDistance;
@@ -66,15 +84,16 @@ exports.findClosestUser = (users) => {
     closestUserList.push({ ...u1, closestUser: tempClosestUser });
   })
 
-  console.log('4) Dla każdego użytkownika znajdzie innego użytkownika, który mieszka najbliżej niego: ', closestUserList) 
+  console.log('4) Dla każdego użytkownika znajdzie innego użytkownika, który mieszka najbliżej niego: ', closestUserList)
 
   return closestUserList;
 }
 
 function sortPostsByUserId(posts) {
   let postsByUserId = [];
+  let usersPosts = [];
 
-  posts.map(post => {
+  posts.forEach(post => {
     if (postsByUserId[post.userId]) {
       postsByUserId[post.userId] = [...postsByUserId[post.userId], post];
     } else {
@@ -82,7 +101,15 @@ function sortPostsByUserId(posts) {
     }
   })
 
-  return postsByUserId;
+  postsByUserId.forEach((posts, index) => {
+    usersPosts.push({ posts: posts, userId: index })
+  })
+
+  return usersPosts;
+}
+
+function getUserPosts(usersPosts, mappedUserId) {
+  return usersPosts.find(({ userId }) => userId === mappedUserId);
 }
 
 function getDistance(position1, position2) {
