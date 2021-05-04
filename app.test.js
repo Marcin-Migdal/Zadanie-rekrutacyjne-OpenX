@@ -68,7 +68,9 @@ test('should find closest user for each user ', async () => {
   const users = await getUsers().then(res => { return res.data });
 
   const closestUser = findClosestUser(users);
-  const expectedId = [3, 3, 2, 5, 4];
+  const expectedId = [5, 3, 2, 1, 1];
+
+  closestUser.forEach(e => console.log(e.closestUser.id))
 
   closestUser.forEach((res, index) => {
     expect(res.closestUser.id)

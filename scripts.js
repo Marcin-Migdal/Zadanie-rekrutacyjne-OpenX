@@ -6,15 +6,9 @@ exports.combineResults = (posts, users) => {
     const userPosts = getUserPosts(usersPosts, user.id);
 
     if (userPosts) {
-      results.push({
-        ...user,
-        posts: userPosts.posts
-      })
+      results.push({ ...user, posts: userPosts.posts })
     } else {
-      results.push({
-        ...user,
-        posts: []
-      })
+      results.push({ ...user, posts: [] })
     }
   });
 
@@ -61,7 +55,7 @@ exports.getNotUniquePosts = (posts) => {
   return notUniquePosts;
 }
 
-exports.findClosestUser = (users) => {
+exports.findClosestUser = (users) => { 
   let closestUserList = [];
 
   users.forEach(u1 => {

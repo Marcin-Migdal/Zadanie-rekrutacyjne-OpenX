@@ -1,7 +1,7 @@
 {
   "name": "zadanie-rekrutacyjne",
   "version": "1.0.0",
-  "description": "Zadanie rekrutacyjne napisane przez Maricn Migdał",
+  "description": "Zadanie rekrutacyjne napisane przez Marcin Migdał",
   "main": "app.js",
   "scripts": {
     "start": "webpack app.js --mode development --watch",
